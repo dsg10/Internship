@@ -1,0 +1,223 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "2db516be-7003-41f6-a860-07d9b1cb0c11",
+   "metadata": {},
+   "source": [
+    "# 01- question code"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "167ca50f-4e58-43b5-a863-bdf7877250ad",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from bs4 import BeautifulSoup\n",
+    "import requests\n",
+    "\n",
+    "page = requests.get('https://www.imdb.com/list/ls056092300')\n",
+    "page\n",
+    "\n",
+    "soup = BeautifulSoup(page.content)\n",
+    "soup\n",
+    "\n",
+    "names = []\n",
+    "for i in  soup.find_all('div',class=\"ipc-title-link-wrapper\"):\n",
+    "    names.append(i.text)\n",
+    "\n",
+    "names\n",
+    "\n",
+    "rates = []\n",
+    "for i in soup.find_all('div',class=\"ipc-rating-star ipc-rating-star--base ipc-rating-star--imdb ratingGroup--imdb-rating\"):\n",
+    "    rates.append(i.text)\n",
+    "\n",
+    "rates\n",
+    "\n",
+    "years = []\n",
+    "for i in soup.find_all('span',class=\"sc-b189961a-8 hCbzGp dli-title-metadata-item\"):\n",
+    "    years.append(i.text)\n",
+    "\n",
+    "years\n",
+    "\n",
+    "import pandas as pd\n",
+    "df = pd.DataFrame({'Names':names,'Rates':rates,'Years':years})\n",
+    "df"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "18e644c5-47c9-4223-996c-7714175959e9",
+   "metadata": {},
+   "source": [
+    "# 04- question code"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "3be4f885-d4be-4f51-8bbe-8b5ee4aa21ba",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import requests\n",
+    "from bs4 import BeautifulSoup\n",
+    "\n",
+    "url = \"http://.bewakoof.com/bestseller?sort=popular\"\n",
+    "response = requests.get(url)\n",
+    "page_content = response.content\n",
+    "\n",
+    "soup = BeautifulSoup(page_content,'html.parser')\n",
+    "\n",
+    "product_item = soup.find_all('div',class=\"product-card_product_container__NkgVJ\"\n",
+    "for i, product_item in enumerate(product_items[:10]):\n",
+    "    product_name = product_item.find('h2', class_='productCardBox_name').text\n",
+    "    product_price = product_item.find('b', class=\"product-card_product_price_container__Ek01t\")text\n",
+    "    product_image_url = product_item.find('img', class=\"sc-8020ee44-0 eMFuRs\")['src']\n",
+    "\n",
+    "print(f\"Product Name: {product_name}\")\n",
+    "print(f\"Product Image URL: {product_image_url}\")\n",
+    "print(f\"Product Price: {product_price}\")\n",
+    "print(\"\\n\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8d8078cd-8f5a-4fc3-9a85-0219728a1908",
+   "metadata": {},
+   "source": [
+    "# 05 question code"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c87a934e-ae24-448b-93c7-a317b7eaa8dd",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import requests\n",
+    "from bs4 import BeautifulSoup\n",
+    "\n",
+    "url = requests.get(\"https://www.cnbc.com/world/?region=world\")\n",
+    "page_content = response.content\n",
+    "\n",
+    "\n",
+    "soup = BeautifulSoup(page_content, 'html.parser')\n",
+    "articles = soup.find_all('div', class=\"FeaturedCard-contentText\").text\n",
+    "\n",
+    "for article in articles:\n",
+    "    heading = article.find('h2', class=\"FeaturedCard-packagedCardTitle\").text\n",
+    "    date = article.find('div', class=\"featureedCard-packagedCardTime\").text\n",
+    "    link = article_find('div', class=\"QuickLinks-deviceHeader QuickLinks-desktopHeader\")['href']\n",
+    "\n",
+    "print(f\"Heading: {heading}\")\n",
+    "print(f\"Date: {date}\")\n",
+    "print(f\"Link: {link}\")\n",
+    "print(\"/n\")\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "dc743b45-4a62-4c2b-bad7-685606be79fd",
+   "metadata": {},
+   "source": [
+    "# 06 question code-"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0208e829-0491-4f36-a6e4-5c921c15de93",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import requests\n",
+    "from bs4 import BeautifulSoup\n",
+    "\n",
+    "url = requests.get(\"https://www.keaipublishing.com/en/journals/artificial-intelligence-in-agriculture/most-downloaded-articles\")\n",
+    "page_content = response.content\n",
+    "soup = BeautifulSoup(page_content, 'html.parser')\n",
+    "articles = soup.find_all('div', class=\"article-listing\").text\n",
+    "\n",
+    "for article in articles:\n",
+    "    title = article.find('h2', class=\"h5 article-title\").text\n",
+    "    date = article.find('p', class=\"article-date\").text\n",
+    "    author = article.find('p', class=\"article-authors\").text\n",
+    "\n",
+    "print(f\"Title: {title}\")\n",
+    "print(f\"Date: {date}\")\n",
+    "print(f\"Author: {author}\")\n",
+    "print(\"/n\")\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e6a5282d-fcc8-4630-9f45-99660521453a",
+   "metadata": {},
+   "source": [
+    "# 02 question code-"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "865dac5a-5105-46ae-812b-e45f18da29c4",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import requests\n",
+    "from bs4 import BeautifulSoup\n",
+    "\n",
+    "url = requests.get('https://www.patreon.com/coreyms')\n",
+    "page_content = response.content\n",
+    "soup = BeautifulSoup(page_content, 'html.parser')\n",
+    "article =soup.find_all('div', class=\"sc-1g6snea-0\").text\n",
+    "\n",
+    "for article in articles:\n",
+    "    heading = article.find('div', class=\"sc-bBHxTw jIEOUn\").text\n",
+    "    date = article.find('div', class=\"sc-lgu5zg-0 gDgFXW\").text\n",
+    "    likes = article.find('div', class=\"sc-jrQzAO knZGTZ\").text\n",
+    "    content = article.find('div', class=\"sc-pn81yk-1 fIwkbU\").text\n",
+    "\n",
+    "print(f\"Heading: {heading}\")\n",
+    "print(f\"Date: {date}\")\n",
+    "print(f\"Likes: {likes}\")\n",
+    "print(f\"Content: {content}\")\n",
+    "print(\"/n\")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "965a40b5-0ceb-4dc3-bd5a-7a325c8b5c9f",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
+
